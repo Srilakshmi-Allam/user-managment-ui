@@ -1,0 +1,14 @@
+.header-container {
+  background-color: #ffff;
+  box-shadow: 2px 10px 5px 0px rgba(0, 0, 0, 0.16);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-logo {
+  width: 129px;
+  height: 35px;
+  margin: 0px 0px 0px 30px;
+}

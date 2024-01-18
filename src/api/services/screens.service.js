@@ -10,10 +10,11 @@ export const fetchAll = createAsyncThunk("screens/fetchAll", async () => {
 
 export const fetchAllWithPagination = createAsyncThunk(
   "screens/fetchAllWithPagination",
-  async ({ page, pageSize, filters }) => {
+  async ({ searchFilters, page, pageSize }) => {
+    searchFilters = JSON.stringify(searchFilters)
     const { data } = await apiClient.get(
       // `${ENDPOINTS.SM_PAGINATION}/${page}/${pageSize}?${filters}`
-      `${ENDPOINTS.SM_PAGINATION}?page=${page}&pageSize=${pageSize}`
+      `${ENDPOINTS.SM_PAGINATION}?searchFilters=${searchFilters}&page=${page}&pageSize=${pageSize}`
     );
     return data;
   }

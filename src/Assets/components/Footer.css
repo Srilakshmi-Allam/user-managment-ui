@@ -1,0 +1,9 @@
+.footer-container {
+  display: flex;
+  align-items: center;
+  height: 10%;
+  background: white;
+  width: calc(100vw - 200px);
+  margin-top: auto;
+  padding-left: 30px;
+}

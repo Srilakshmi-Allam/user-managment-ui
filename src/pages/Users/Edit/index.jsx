@@ -333,17 +333,17 @@ const UpdateUser = () => {
     <div className="container mt-0">
       <BreadCrumb breadCrumbs={breadCrumbsUpdateUser} />
       <div className="d-flex justify-content-between align-items-center">
-        <h3 className="mb-4">Update User</h3>
+        <h3 className="page-heading mb-0">Update User</h3>
         <div>
           <button
             type="button"
             className="btn btn-danger margin-right-15"
             onClick={handleResetPassword}
           >
-            Reset Password
+            <i class="bi bi-lock"></i> Reset Password
           </button>
           <button type="button" className="btn btn-danger" onClick={handleBack}>
-            Back
+            <i className="bi bi-arrow-left"></i> Back
           </button>
         </div>
       </div>
@@ -352,190 +352,194 @@ const UpdateUser = () => {
       )}
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       {userDetails ? (
-        <form onSubmit={handleSubmit(handleSave)}>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group mb-3">
-                <label htmlFor="userId">
-                  Username:<span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="userId"
-                  className="form-control bg-light"
-                  value={userDetails.UserID}
-                  readOnly
-                />
-              </div>
-              <div
-                className={`form-group mb-3 ${
-                  isErrorLengthFN ? "has-error" : ""
-                }`}
-              >
-                <label htmlFor="firstName">
-                  First Name:<span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  className={`form-control ${
-                    isErrorLengthFN ? "is-invalid" : ""
+        <div className="update-content-container">
+          <form onSubmit={handleSubmit(handleSave)}>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group mb-3">
+                  <label htmlFor="userId">
+                    Username:<span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="userId"
+                    className="form-control bg-light"
+                    value={userDetails.UserID}
+                    readOnly
+                  />
+                </div>
+                <div
+                  className={`form-group mb-3 ${
+                    isErrorLengthFN ? "has-error" : ""
                   }`}
-                  name="FirstName"
-                  value={editedDetails.FirstName}
-                  onChange={handleFieldChange}
-                />
-                {isErrorLengthFN && (
-                  <span className="text-danger">Not Valid Length.</span>
-                )}
-                {isValidErrorFN && (
-                  <span className="text-danger">
-                    First Name Should Have Only Alphabets.
-                  </span>
-                )}
-              </div>
-              <div className="form-group mb-3">
-                <label htmlFor="accountLocked">
-                  Account Locked:<span className="text-danger">*</span>
-                </label>
-                <select
-                  id="accountLocked"
-                  className="form-control"
-                  name="AccountLocked"
-                  value={editedDetails.AccountLocked}
-                  onChange={handleFieldChange}
                 >
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
-                </select>
+                  <label htmlFor="firstName">
+                    First Name:<span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    className={`form-control ${
+                      isErrorLengthFN ? "is-invalid" : ""
+                    }`}
+                    name="FirstName"
+                    value={editedDetails.FirstName}
+                    onChange={handleFieldChange}
+                  />
+                  {isErrorLengthFN && (
+                    <span className="text-danger">Not Valid Length.</span>
+                  )}
+                  {isValidErrorFN && (
+                    <span className="text-danger">
+                      First Name Should Have Only Alphabets.
+                    </span>
+                  )}
+                </div>
+                <div className="form-group mb-3">
+                  <label htmlFor="accountLocked">
+                    Account Locked:<span className="text-danger">*</span>
+                  </label>
+                  <select
+                    id="accountLocked"
+                    className="form-control"
+                    name="AccountLocked"
+                    value={editedDetails.AccountLocked}
+                    onChange={handleFieldChange}
+                  >
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+                <div className="form-group mb-3">
+                  <label htmlFor="UserGroupName">
+                    Group:<span className="text-danger">*</span>
+                  </label>
+                  <select
+                    id="UserGroupName"
+                    className="form-control"
+                    name="UserGroupID"
+                    value={selectedUserGroup}
+                    onChange={handleGroupChange}
+                  >
+                    {groups.map((group) => (
+                      <option key={group.UserGroupID} value={group.UserGroupID}>
+                        {group.UserGroupName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              <div className="form-group mb-3">
-                <label htmlFor="UserGroupName">
-                  Group:<span className="text-danger">*</span>
-                </label>
-                <select
-                  id="UserGroupName"
-                  className="form-control"
-                  name="UserGroupID"
-                  value={selectedUserGroup}
-                  onChange={handleGroupChange}
-                >
-                  {groups.map((group) => (
-                    <option key={group.UserGroupID} value={group.UserGroupID}>
-                      {group.UserGroupName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="form-group mb-3">
-                <label htmlFor="email">
-                  Email:<span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  className="form-control bg-light"
-                  name="UserEmail"
-                  value={editedDetails.UserEmail}
-                  readOnly
-                />
-              </div>
-              <div
-                className={`form-group mb-3 ${
-                  isErrorLengthLN ? "has-error" : ""
-                }`}
-              >
-                <label htmlFor="lastName">
-                  Last Name:<span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  className={`form-control ${
-                    isErrorLengthLN ? "is-invalid" : ""
+              <div className="col-md-6">
+                <div className="form-group mb-3">
+                  <label htmlFor="email">
+                    Email:<span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="email"
+                    className="form-control bg-light"
+                    name="UserEmail"
+                    value={editedDetails.UserEmail}
+                    readOnly
+                  />
+                </div>
+                <div
+                  className={`form-group mb-3 ${
+                    isErrorLengthLN ? "has-error" : ""
                   }`}
-                  name="LastName"
-                  value={editedDetails.LastName}
-                  onChange={handleFieldChange}
-                />
-                {isErrorLengthLN && (
-                  <span className="text-danger">Not Valid Length.</span>
-                )}
-                {isValidErrorLN && (
-                  <span className="text-danger">
-                    Last Name Should Have Only Alphabets.
-                  </span>
-                )}
-              </div>
-              <div className="form-group mb-3">
-                <label htmlFor="requirePasswordChange">
-                  Require Password Change:<span className="text-danger">*</span>
-                </label>
-                <select
-                  id="requirePasswordChange"
-                  className="form-control"
-                  name="RequirePasswordChange"
-                  value={editedDetails?.RequirePasswordChange}
-                  onChange={handleFieldChange}
                 >
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
-                </select>
-              </div>
-              <div className="form-group mb-3">
-                <label htmlFor="RoleName">
-                  Role:<span className="text-danger">*</span>
-                </label>
-                <select
-                  id="RoleName"
-                  className="form-control"
-                  name="RoleID"
-                  value={selectedRole}
-                  onChange={handleRoleChange}
-                >
-                  {roles.map((role) => (
-                    <option key={role.RoleID} value={role.RoleID}>
-                      {role.RoleName}
-                    </option>
-                  ))}
-                </select>
+                  <label htmlFor="lastName">
+                    Last Name:<span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    className={`form-control ${
+                      isErrorLengthLN ? "is-invalid" : ""
+                    }`}
+                    name="LastName"
+                    value={editedDetails.LastName}
+                    onChange={handleFieldChange}
+                  />
+                  {isErrorLengthLN && (
+                    <span className="text-danger">Not Valid Length.</span>
+                  )}
+                  {isValidErrorLN && (
+                    <span className="text-danger">
+                      Last Name Should Have Only Alphabets.
+                    </span>
+                  )}
+                </div>
+                <div className="form-group mb-3">
+                  <label htmlFor="requirePasswordChange">
+                    Require Password Change:
+                    <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    id="requirePasswordChange"
+                    className="form-control"
+                    name="RequirePasswordChange"
+                    value={editedDetails?.RequirePasswordChange}
+                    onChange={handleFieldChange}
+                  >
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+                <div className="form-group mb-3">
+                  <label htmlFor="RoleName">
+                    Role:<span className="text-danger">*</span>
+                  </label>
+                  <select
+                    id="RoleName"
+                    className="form-control"
+                    name="RoleID"
+                    value={selectedRole}
+                    onChange={handleRoleChange}
+                  >
+                    {roles.map((role) => (
+                      <option key={role.RoleID} value={role.RoleID}>
+                        {role.RoleName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-12 pt-4 text-center mb-3 d-flex justify-content-between align-items-center">
-            <div className="d-none d-md-block"></div>
-            <div className="d-flex justify-content-center buttonMargin">
-              <button
-                className={`btn btn-danger ${isDirty ? "" : "disabled"}`}
-                onClick={handleSave}
-                disabled={
-                  !buttonEnabled ||
-                  isSaving ||
-                  isErrorLengthLN ||
-                  isValidErrorLN ||
-                  isErrorLengthFN ||
-                  isValidErrorFN ||
-                  isSaved
-                }
-              >
-                {isSaving ? "Saving..." : "Save"}
-              </button>
-              <button
-                className={`btn btn-danger mx-2 ${
-                  !isDirty && !isSaved ? "disabled" : ""
-                }`}
-                onClick={handleCancel}
-                disabled={!isDirty || isSaved}
-              >
-                Reset
-              </button>
-            </div>
+            <div className="col-12 pt-4 text-center mb-3 d-flex justify-content-between align-items-center">
+              <div className="d-none d-md-block"></div>
+              <div className="d-flex justify-content-center buttonMargin">
+                <button
+                  className={`btn btn-danger ${isDirty ? "" : "disabled"}`}
+                  onClick={handleSave}
+                  disabled={
+                    !buttonEnabled ||
+                    isSaving ||
+                    isErrorLengthLN ||
+                    isValidErrorLN ||
+                    isErrorLengthFN ||
+                    isValidErrorFN ||
+                    isSaved
+                  }
+                >
+                  <i className="bi bi-check-circle"></i>{" "}
+                  {isSaving ? "Saving..." : "Save"}
+                </button>
+                <button
+                  className={`btn btn-danger mx-2 ${
+                    !isDirty && !isSaved ? "disabled" : ""
+                  }`}
+                  onClick={handleCancel}
+                  disabled={!isDirty || isSaved}
+                >
+                  <i className="bi bi-arrow-clockwise"></i> Reset
+                </button>
+              </div>
 
-            {userDetails && <TimeStamp displayData={userDetails} /> }
-          </div>
-        </form>
+              {userDetails && <TimeStamp displayData={userDetails} />}
+            </div>
+          </form>
+        </div>
       ) : (
         <p>Loading user details...</p>
       )}

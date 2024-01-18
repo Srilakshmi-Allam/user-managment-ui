@@ -4,10 +4,10 @@ import { ENDPOINTS } from "../../config";
 
 export const fetchAll = createAsyncThunk(
   "modules/fetchAll",
-  async ({ page, pageSize, filters }) => {
+  async ({ searchFilters, page, pageSize }) => {
+    searchFilters = JSON.stringify(searchFilters)
     const { data } = await apiClient.get(
-      // `${ENDPOINTS.USER_MODULES}/${page}/${pageSize}?${filters}`
-      `${ENDPOINTS.USER_MODULES}?page=${page}&pageSize=${pageSize}`
+      `${ENDPOINTS.USER_MODULES}?searchFilters=${searchFilters}&page=${page}&pageSize=${pageSize}`
     );
     return data;
   }

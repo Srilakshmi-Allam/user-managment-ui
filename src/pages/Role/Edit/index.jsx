@@ -83,11 +83,12 @@ const EditRole = () => {
     <div className="container mt-0">
       <BreadCrumb breadCrumbs={breadCrumbsUpdateRole} />
       <div className="d-flex justify-content-between align-items-center">
-        <h3 className="mb-4">Update Role</h3>
+        <h3 className="page-heading mb-0">Update Role</h3>
         <button type="button" className="btn btn-danger" onClick={handleBack}>
-          Back
+        <i className="bi bi-arrow-left"></i>  Back
         </button>
       </div>
+      <div className="update-content-container">
       <div className="row ">
         <div className="col-md-6">
           <div className="form-group mb-2">
@@ -119,6 +120,7 @@ const EditRole = () => {
         <div className="col-md-12">
           {isPending ? "..Loading" : <TreeViewComponent />}
         </div>
+      </div>
       </div>
     </div>
   );

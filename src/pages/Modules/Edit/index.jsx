@@ -5,11 +5,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { last } from "lodash";
 import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsUpdateModule } from "../../../utils/shared/breadcrumbs";
+import { useForm } from "react-hook-form";
 
 const UpdateModule = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const methods = useForm();
+  const {
+    formState: { isDirty },
+  } = methods;
   const { moduleDataById } = useSelector((state) => state.modules);
 
   const getModuleId = useMemo(() => {
@@ -29,11 +34,12 @@ const UpdateModule = () => {
     <div className="container mt-0">
       <BreadCrumb breadCrumbs={breadCrumbsUpdateModule} />
       <div className="d-flex justify-content-between align-items-center">
-        <h3 className="mb-4">Update Module</h3>
+        <h3 className="page-heading mb-0">Update Module</h3>
         <button type="button" className="btn btn-danger" onClick={handleBack}>
-          Back
+         <i className="bi bi-arrow-left"></i> Back
         </button>
       </div>
+      <div className="update-content-container">
       <div className="row ">
         <div className="col-md-6">
           <div className="form-group mb-2">
@@ -79,12 +85,13 @@ const UpdateModule = () => {
         </div>
       </div>
       <div className="mt-3 d-flex align-items-center justify-content-center">
-        <button type="button" className="btn btn-danger m-3">
-          Save
+        <button type="button" className="btn btn-danger m-3" disabled= {!isDirty}>
+        <i className="bi bi-check-circle"></i>  Save
         </button>
-        <button type="button" className="btn btn-danger">
-          Reset
+        <button type="button" className="btn btn-danger" disabled= {!isDirty}>
+        <i className="bi bi-arrow-clockwise"></i> Reset
         </button>
+      </div>
       </div>
     </div>
   );

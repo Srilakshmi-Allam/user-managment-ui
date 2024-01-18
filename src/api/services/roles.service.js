@@ -4,10 +4,11 @@ import { ENDPOINTS } from "../../config";
 
 export const fetchAll = createAsyncThunk(
   "roles/fetchAll",
-  async ({ page, pageSize, filters }) => {
+  async ({ searchFilters, page, pageSize }) => {
+    searchFilters = JSON.stringify(searchFilters)
     const { data } = await apiClient.get(
       // `${ENDPOINTS.ROLES_GROUP}/${page}/${pageSize}`
-      `${ENDPOINTS.ROLES_GROUP}?page=${page}&pageSize=${pageSize}`
+      `${ENDPOINTS.ROLES_GROUP}?searchFilters=${searchFilters}&page=${page}&pageSize=${pageSize}`
     );
     return data;
   }

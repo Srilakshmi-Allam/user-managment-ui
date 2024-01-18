@@ -9,6 +9,7 @@ import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsUserList } from "../../../utils/shared/breadcrumbs";
 import { TABLE_SIZE } from "../../../config";
 import { isEmpty } from "lodash";
+import SearchBox from "../../../components/SearchBox";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,10 @@ const Users = () => {
   const location = useLocation();
 
   const [dataState, setDataState] = useState();
+  const [searchFilters, setSearchFilters] = useState({});
+
+  const userSearchFields = ["first_name", "last_name"];
+  const userPlaceholderTexts = ["First Name", "Last Name"];
 
   useEffect(() => {
     if (location?.state) {
@@ -53,22 +58,14 @@ const Users = () => {
       // const formattedURL = extractFilterValues(filter, fieldMappings);
       dispatch(
         fetchUsersWithSearchParam({
+          searchFilters,
           page,
           pageSize: take,
           // filters: formattedURL,
         })
       );
     }
-
-    // else {
-    //   dispatch(
-    //     fetchUsersWithSearchParam({
-    //       page: 1,
-    //       pageSize: 10,
-    //     })
-    //   );
-    // }
-  }, [dataState, dispatch, fieldMappings]);
+  }, [dataState, dispatch, fieldMappings, searchFilters]);
 
   const handleRowClick = (props) => {
     const userId = props.dataItem.UserID;
@@ -81,12 +78,19 @@ const Users = () => {
     <div className="container ">
       <BreadCrumb breadCrumbs={breadCrumbsUserList} />
       <div className="d-flex justify-content-between align-items-center">
-        <h3 className="mb-0">Users</h3>
+        <h3 className="page-heading mb-0">Users</h3>
         <Link to="/usermanagement/users/create">
           <button type="button" className="btn btn-danger">
-            Create User
+            <i className="bi-plus-circle"></i> Create User
           </button>
         </Link>
+      </div>
+      <div className="col-8 pt-2">
+        <SearchBox
+          searchFields={userSearchFields}
+          onSearchFilters={setSearchFilters}
+          placeholderTexts={userPlaceholderTexts}
+        />
       </div>
       <div className="mt-3 ">
         {isPending ? (
@@ -104,8 +108,6 @@ const Users = () => {
               pageSize={dataState?.take}
               onDataStateChange={dataStateChange}
               onRowClick={handleRowClick}
-              scrollable={true}
-              style={{ height: "565px" }}
             >
               <Column
                 field="UserID"

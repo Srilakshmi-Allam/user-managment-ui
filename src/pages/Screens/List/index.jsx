@@ -10,6 +10,7 @@ import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsScreenList } from "../../../utils/shared/breadcrumbs";
 import { TABLE_SIZE } from "../../../config";
 import { isEmpty } from "lodash";
+import SearchBox from "../../../components/SearchBox"
 
 const Screens = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,10 @@ const Screens = () => {
   const { screenData, isPending } = useSelector((state) => state.screens);
 
   const [dataState, setDataState] = useState();
+  const [searchFilters, setSearchFilters] = useState({});
+  
+  const userSearchFields = ["screen_id", "screen_name"];
+  const userPlaceholderTexts = ["Screen ID", "Screen Name"];
 
   useEffect(() => {
     if (location?.state) {
@@ -47,14 +52,13 @@ const Screens = () => {
 
   useEffect(() => {
     if (!isEmpty(dataState)) {
-      const { skip, take, filter } = dataState;
+      const { skip, take } = dataState;
       const page = Math.floor(skip / take) + 1;
-      const formattedURL = extractFilterValues(filter, fieldMappings);
       dispatch(
-        fetchAllWithPagination({ page, pageSize: take, filters: formattedURL })
+        fetchAllWithPagination({ searchFilters,page, pageSize: take})
       );
     }
-  }, [dataState, dispatch, fieldMappings]);
+  }, [dataState, dispatch, searchFilters]);
 
   const moduleIcon = (props) => {
     return (
@@ -73,8 +77,15 @@ const Screens = () => {
   return (
     <div className="container">
       <BreadCrumb breadCrumbs={breadCrumbsScreenList} />
-      <h3>Screens</h3>
-      <div>
+      <h3 className="page-heading mb-0">Screens</h3>
+      <div className="col-8 pt-2">
+        <SearchBox
+          searchFields={userSearchFields}
+          onSearchFilters={setSearchFilters}
+          placeholderTexts={userPlaceholderTexts}
+        />
+      </div>
+      <div className="mt-3 ">
         {isPending ? (
           "...Loading"
         ) : (
@@ -89,8 +100,6 @@ const Screens = () => {
             pageSize={dataState?.take}
             onDataStateChange={dataStateChange}
             onRowClick={handleRowClick}
-            scrollable={true}
-            style={{ height: "576px" }}
           >
             <Column
               field="ScreenID"

@@ -9,9 +9,11 @@ import { useSelector } from "react-redux";
 import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsCreateUser } from "../../../utils/shared/breadcrumbs";
 import { isEmpty, some } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const CreateUser = () => {
   const methods = useForm();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -94,150 +96,173 @@ const CreateUser = () => {
     setIsValid(hasEmptyValue);
   }, [watchAll]);
 
-  return (
-    <div className="container">
-      <BreadCrumb breadCrumbs={breadCrumbsCreateUser} />
-      <h1 className="mb-4 text-center">Create User</h1>
+  const handleBack = () => {
+    navigate(-1);
+  };
 
+  const handleGroup = () => {
+    setValue("roleSelect", "");
+  };
+
+  return (
+    <div>
+      <BreadCrumb breadCrumbs={breadCrumbsCreateUser} />
+      <div className="d-flex justify-content-between align-items-center">
+        <h3 className="page-heading mb-0">Create User</h3>
+        <button
+          type="button"
+          className="btn btn-danger btn-min-width"
+          onClick={handleBack}
+        >
+          <i className="bi bi-arrow-left"></i> Back
+        </button>
+      </div>
       {successMessage && (
         <div className="alert alert-success">{successMessage}</div>
       )}
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="row">
-            <div className="col">
-              <TextBox
-                name="username"
-                label="Username:"
-                placeholder={errorMessages.USER_NAME}
-                errors={errors}
-                register={register}
-                validationSchema={{
-                  required: errorMessages.ERROR_REQUIRED_USERNAME,
-                  pattern: {
-                    value: /^[a-zA-Z][a-zA-Z0-9]*$/i,
-                    message: errorMessages.ERROR_PATTERN_USERNAME,
-                  },
-                }}
-                onBlur={() => trigger("username")}
-                maxLength="60"
-                isRequired
-              />
+      <div className="create-content-container">
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="row">
+              <div className="col">
+                <TextBox
+                  name="username"
+                  label="Username:"
+                  placeholder={errorMessages.USER_NAME}
+                  errors={errors}
+                  register={register}
+                  validationSchema={{
+                    required: errorMessages.ERROR_REQUIRED_USERNAME,
+                    pattern: {
+                      value: /^[a-zA-Z][a-zA-Z0-9]*$/i,
+                      message: errorMessages.ERROR_PATTERN_USERNAME,
+                    },
+                  }}
+                  onBlur={() => trigger("username")}
+                  maxLength="60"
+                  isRequired
+                />
+              </div>
+              <div className="col">
+                <TextBox
+                  name="emailid"
+                  label="Email:"
+                  placeholder={errorMessages.EMAIL_ADDRESS}
+                  errors={errors}
+                  register={register}
+                  validationSchema={{
+                    required: errorMessages.ERROR_REQUIRED_EMAIL,
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: errorMessages.ERROR_PATTERN_EMAIL,
+                    },
+                  }}
+                  onBlur={() => trigger("emailid")}
+                  isRequired
+                />
+              </div>
             </div>
-            <div className="col">
-              <TextBox
-                name="emailid"
-                label="Email:"
-                placeholder={errorMessages.EMAIL_ADDRESS}
-                errors={errors}
-                register={register}
-                validationSchema={{
-                  required: errorMessages.ERROR_REQUIRED_EMAIL,
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: errorMessages.ERROR_PATTERN_EMAIL,
-                  },
-                }}
-                onBlur={() => trigger("emailid")}
-                isRequired
-              />
+            <div className="row mt-2">
+              <div className="col">
+                <TextBox
+                  name="firstname"
+                  label="First Name:"
+                  placeholder={errorMessages.FIRST_NAME}
+                  errors={errors}
+                  register={register}
+                  validationSchema={{
+                    required: errorMessages.ERROR_REQUIRED_FIRSTNAME,
+                    pattern: {
+                      value: /^[A-Za-z\s]+$/i,
+                      message: errorMessages.ERROR_PATTERN_FIRSTNAME,
+                    },
+                  }}
+                  onBlur={() => trigger("firstname")}
+                  minLength="2"
+                  maxLength="40"
+                  isRequired
+                />
+              </div>
+              <div className="col">
+                <TextBox
+                  name="lastname"
+                  label="Last Name:"
+                  placeholder={errorMessages.LAST_NAME}
+                  errors={errors}
+                  register={register}
+                  validationSchema={{
+                    required: errorMessages.ERROR_REQUIRED_LASTNAME,
+                    pattern: {
+                      value: /^[A-Za-z]+$/,
+                      message: errorMessages.ERROR_PATTERN_LASTNAME,
+                    },
+                  }}
+                  onBlur={() => trigger("lastname")}
+                  minLength="2"
+                  maxLength="60"
+                  isRequired
+                />
+              </div>
             </div>
-          </div>
-          <div className="row pt-4">
-            <div className="col">
-              <TextBox
-                name="firstname"
-                label="First Name:"
-                placeholder={errorMessages.FIRST_NAME}
-                errors={errors}
-                register={register}
-                validationSchema={{
-                  required: errorMessages.ERROR_REQUIRED_FIRSTNAME,
-                  pattern: {
-                    value: /^[A-Za-z\s]+$/i,
-                    message: errorMessages.ERROR_PATTERN_FIRSTNAME,
-                  },
-                }}
-                onBlur={() => trigger("firstname")}
-                minLength="2"
-                maxLength="40"
-                isRequired
-              />
+            <div className="row mt-2">
+              <div className="col">
+                <SelectBox
+                  name="userGroupSelect"
+                  label="Group:"
+                  control={control}
+                  isRequired
+                  options={userGroups}
+                  placeholder="Select a group"
+                  errors={errors}
+                  register={register}
+                  validationSchema={{
+                    required: errorMessages.ERROR_SELECT_USER_GROUP,
+                  }}
+                  setValue={setValue}
+                >
+                  <option value="">Select a group</option>
+                  {userGroups.map((group) => (
+                    <option key={group.UserGroupID} value={group.UserGroupID}>
+                      {group.UserGroupName}
+                    </option>
+                  ))}
+                </SelectBox>
+              </div>
+              <div className="col">
+                <SelectBox
+                  name="roleSelect"
+                  label="Role:"
+                  control={control}
+                  isRequired
+                  errors={errors}
+                  register={register}
+                  validationSchema={{
+                    required: errorMessages.ERROR_SELECT_ROLE,
+                  }}
+                  setValue={setValue}
+                  onChange={handleGroup}
+                >
+                  <option value="">Select a role</option>
+                  {roles.map((role) => (
+                    <option key={role.RoleID} value={role.RoleID}>
+                      {role.RoleName}
+                    </option>
+                  ))}
+                </SelectBox>
+              </div>
             </div>
-            <div className="col">
-              <TextBox
-                name="lastname"
-                label="Last Name:"
-                placeholder={errorMessages.LAST_NAME}
-                errors={errors}
-                register={register}
-                validationSchema={{
-                  required: errorMessages.ERROR_REQUIRED_LASTNAME,
-                  pattern: {
-                    value: /^[A-Za-z]+$/,
-                    message: errorMessages.ERROR_PATTERN_LASTNAME,
-                  },
-                }}
-                onBlur={() => trigger("lastname")}
-                minLength="2"
-                maxLength="60"
-                isRequired
-              />
-            </div>
-          </div>
-          <div className="row pt-4">
-            <div className="col">
-              <SelectBox
-                name="userGroupSelect"
-                label="Group:"
-                control={control}
-                isRequired
-                options={userGroups}
-                placeholder="Select a group"
-                errors={errors}
-                register={register}
-                validationSchema={{
-                  required: errorMessages.ERROR_SELECT_USER_GROUP,
-                }}
-                setValue={setValue}
+            <div className="col-12 pt-4 text-center">
+              <button
+                type="submit"
+                className="btn btn-danger"
+                disabled={isValid}
               >
-                <option value="">Select a group</option>
-                {userGroups.map((group) => (
-                  <option key={group.UserGroupID} value={group.UserGroupID}>
-                    {group.UserGroupName}
-                  </option>
-                ))}
-              </SelectBox>
+                Create User
+              </button>
             </div>
-            <div className="col">
-              <SelectBox
-                name="roleSelect"
-                label="Role:"
-                control={control}
-                isRequired
-                errors={errors}
-                register={register}
-                validationSchema={{
-                  required: errorMessages.ERROR_SELECT_ROLE,
-                }}
-                setValue={setValue}
-              >
-                <option value="">Select a role</option>
-                {roles.map((role) => (
-                  <option key={role.RoleID} value={role.RoleID}>
-                    {role.RoleName}
-                  </option>
-                ))}
-              </SelectBox>
-            </div>
-          </div>
-          <div className="col-12 pt-4 text-center">
-            <button type="submit" className="btn btn-danger" disabled={isValid}>
-              Create User
-            </button>
-          </div>
-        </form>
-      </FormProvider>
+          </form>
+        </FormProvider>
+      </div>
     </div>
   );
 };

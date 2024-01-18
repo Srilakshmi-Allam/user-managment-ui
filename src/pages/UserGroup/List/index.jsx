@@ -9,6 +9,7 @@ import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsGroupList } from "../../../utils/shared/breadcrumbs";
 import { TABLE_SIZE } from "../../../config";
 import { isEmpty } from "lodash";
+import SearchBox from "../../../components/SearchBox.js"
 
 const Groups = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ const Groups = () => {
   const [selected, setSelected] = React.useState(0);
   const { groupList, isPending } = useSelector((state) => state.groups);
   const [dataState, setDataState] = useState();
+  const [searchFilters, setSearchFilters] = useState({});
+  
+  const userSearchFields = ["user_group_id","user_group_name"];
+  const userPlaceholderTexts = ["User Group ID","User Group Name"];
 
   useEffect(() => {
     if (location?.state) {
@@ -36,12 +41,12 @@ const Groups = () => {
 
   useEffect(() => {
     if (!isEmpty(dataState)) {
-      const { skip, take, filter } = dataState;
+      const { skip, take } = dataState;
       const page = Math.floor(skip / take) + 1;
-      const formattedURL = extractFilterValues(filter);
-      dispatch(fetchAll({ page, pageSize: take, filters: formattedURL }));
+      dispatch(fetchAll({ page, pageSize: take, 
+        searchFilters, }));
     }
-  }, [dataState, dispatch]);
+  }, [dataState, dispatch, searchFilters]);
 
   const handleRowClick = (props) => {
     const GroupId = props.dataItem.UserGroupID;
@@ -55,8 +60,15 @@ const Groups = () => {
   return (
     <div className="container ">
       <BreadCrumb breadCrumbs={breadCrumbsGroupList} />
-      <h3>Groups</h3>
-      <div>
+      <h3 className="page-heading mb-0">Groups</h3>
+      <div className="col-8 pt-2">
+        <SearchBox
+          searchFields={userSearchFields}
+          onSearchFilters={setSearchFilters}
+          placeholderTexts={userPlaceholderTexts}
+        />
+      </div>
+      <div className="mt-3 ">
         {isPending ? (
           "...Loading"
         ) : (
@@ -71,8 +83,6 @@ const Groups = () => {
             pageSize={dataState?.take}
             onDataStateChange={dataStateChange}
             onRowClick={handleRowClick}
-            scrollable={true}
-            style={{ height: "576px" }}
           >
             <Column
               field="UserGroupID"

@@ -9,6 +9,7 @@ import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsRoleList } from "../../../utils/shared/breadcrumbs";
 import { TABLE_SIZE } from "../../../config";
 import { isEmpty } from "lodash";
+import SearchBox from "../../../components/SearchBox"
 
 const Roles = () => {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ const Roles = () => {
   const location = useLocation();
   const [dataState, setDataState] = useState();
   const { roleList, isPending } = useSelector((state) => state.roles);
+  const [searchFilters, setSearchFilters] = useState({});
+  
+  const userSearchFields = ["role_id","role_name"];
+  const userPlaceholderTexts = ["Role ID","Role Name"];
 
   useEffect(() => {
     if (location?.state) {
@@ -41,18 +46,13 @@ const Roles = () => {
     setDataState(e.dataState);
   };
 
-  // const dataStateChange = (e) => {
-  //   dispatch(setRoleListDataState(e.dataState));
-  // };
-
   useEffect(() => {
     if (!isEmpty(dataState)) {
-      const { skip, take, filter } = dataState;
+      const { skip, take } = dataState;
       const page = Math.floor(skip / take) + 1;
-      const formattedURL = extractFilterValues(filter, fieldMappings);
-      dispatch(fetchAll({ page, pageSize: take, filters: formattedURL }));
+      dispatch(fetchAll({searchFilters, page, pageSize: take  }));
     }
-  }, [dataState, dispatch, fieldMappings]);
+  }, [dataState, dispatch, searchFilters]);
 
   const handleRole = (role) => {
     const { RoleID, RoleName } = role;
@@ -68,8 +68,15 @@ const Roles = () => {
   return (
     <div className="container">
       <BreadCrumb breadCrumbs={breadCrumbsRoleList} />
-      <h3>Roles</h3>
-      <div>
+      <h3 className="page-heading mb-0">Roles</h3>
+      <div className="col-8 pt-2">
+        <SearchBox
+          searchFields={userSearchFields}
+          onSearchFilters={setSearchFilters}
+          placeholderTexts={userPlaceholderTexts}
+        />
+      </div>
+      <div className="mt-3 ">
         {isPending ? (
           "...Loading"
         ) : (
@@ -85,8 +92,6 @@ const Roles = () => {
               pageSize={dataState?.take}
               onDataStateChange={dataStateChange}
               onRowClick={handleRowClick}
-              scrollable={true}
-              style={{ height: "576px" }}
             >
               <Column
                 field="RoleID"

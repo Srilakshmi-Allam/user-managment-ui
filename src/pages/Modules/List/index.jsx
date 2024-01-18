@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAll } from "../../../api/services/modules.service";
 import { Grid, GridColumn as Column } from "@progress/kendo-react-grid";
 import { ColumnMenu } from "../../../components/GridTable/ColumnMenu";
-import { extractFilterValues } from "../../../utils/shared/formattedData";
 import { useLocation, useNavigate } from "react-router-dom";
 // import { setModuleListDataState } from "../../../slices/modules";
 import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsModuleList } from "../../../utils/shared/breadcrumbs";
 import { TABLE_SIZE } from "../../../config";
 import { isEmpty } from "lodash";
+import SearchBox from "../../../components/SearchBox";
 
 const Modules = () => {
   const dispatch = useDispatch();
@@ -18,6 +18,10 @@ const Modules = () => {
   const { moduleList, isPending } = useSelector((state) => state.modules);
 
   const [dataState, setDataState] = useState();
+  const [searchFilters, setSearchFilters] = useState({});
+  
+  const userSearchFields = ["module_id", "module_name"];
+  const userPlaceholderTexts = ["Module ID", "Module Name"];
 
   useEffect(() => {
     if (location?.state) {
@@ -37,12 +41,12 @@ const Modules = () => {
 
   useEffect(() => {
     if (!isEmpty(dataState)) {
-      const { skip, take, filter } = dataState;
+      const {skip, take } = dataState;
       const page = Math.floor(skip / take) + 1;
-      const formattedURL = extractFilterValues(filter);
-      dispatch(fetchAll({ page, pageSize: take, filters: formattedURL }));
+      dispatch(fetchAll({ page, pageSize: take,
+        searchFilters, }));
     }
-  }, [dataState, dispatch]);
+  }, [dataState, dispatch, searchFilters]);
 
   const moduleIcon = (props) => {
     return (
@@ -61,8 +65,15 @@ const Modules = () => {
   return (
     <div className="container">
       <BreadCrumb breadCrumbs={breadCrumbsModuleList} />
-      <h3>Modules</h3>
-      <div>
+      <h3 className="page-heading mb-0">Modules</h3>
+      <div className="col-8 pt-2">
+        <SearchBox
+          searchFields={userSearchFields}
+          onSearchFilters={setSearchFilters}
+          placeholderTexts={userPlaceholderTexts}
+        />
+      </div>
+      <div className="mt-3 ">
         {isPending ? (
           "...Loading"
         ) : (
@@ -77,8 +88,6 @@ const Modules = () => {
             pageSize={dataState?.take}
             onDataStateChange={dataStateChange}
             onRowClick={handleRowClick}
-            scrollable={true}
-            style={{ height: "576px" }}
           >
             <Column
               field="ModuleID"
