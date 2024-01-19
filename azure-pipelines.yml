@@ -1,0 +1,34 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm run build  # Assuming this script builds your React app
+    npm pack
+  displayName: 'Build and Pack User Management Module'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)'
+    artifact: 'user-management-package'
+
+- task: NpmAuthenticate@0
+  inputs:
+    workingFile: .npmrc
+
+- task: Npm@1
+  displayName: 'Publish Npm Package'
+  inputs:
+    command: "publish"
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    publishRegistry: useFeed
+    publishFeed: EpisodeDetector/exalent-user-management
