@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, GridColumn as Column } from "@progress/kendo-react-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { isEmpty } from "lodash";
+
 import { fetchUsersWithSearchParam } from "../../../api/services/users.service";
-import { ColumnMenu } from "../../../components/GridTable/ColumnMenu";
-import { extractFilterValues } from "../../../utils/shared/formattedData";
-import BreadCrumb from "../../../components/BreadCrumb";
 import { breadCrumbsUserList } from "../../../utils/shared/breadcrumbs";
 import { TABLE_SIZE } from "../../../config";
-import { isEmpty } from "lodash";
+import { ColumnMenu } from "../../../components/GridTable/ColumnMenu";
+import BreadCrumb from "../../../components/BreadCrumb";
 import SearchBox from "../../../components/SearchBox";
 
 const Users = () => {
@@ -55,7 +55,6 @@ const Users = () => {
     if (!isEmpty(dataState)) {
       const { skip, take } = dataState;
       const page = Math.floor(skip / take) + 1;
-      // const formattedURL = extractFilterValues(filter, fieldMappings);
       dispatch(
         fetchUsersWithSearchParam({
           searchFilters,

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import apiClient from "../../../api/axios";
-import BreadCrumb from "../../../components/BreadCrumb";
-import { breadCrumbsUpdateUser } from "../../../utils/shared/breadcrumbs";
-import "../../../App.css";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Modal, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import "../../../App.css";
+import apiClient from "../../../api/axios";
+import { breadCrumbsUpdateUser } from "../../../utils/shared/breadcrumbs";
 import { fetchUsersById } from "../../../api/services/users.service";
 import { setUserData } from "../../../slices/users";
 import TimeStamp from "../../../components/TimeStamp";
+import BreadCrumb from "../../../components/BreadCrumb";
 
 const UpdateUser = () => {
   const navigate = useNavigate();
@@ -42,7 +43,6 @@ const UpdateUser = () => {
   }, [dispatch, userId]);
   const {
     handleSubmit,
-    // formState: { isDirty: isFormDirty },
     reset,
   } = useForm({
     mode: "onBlur",
