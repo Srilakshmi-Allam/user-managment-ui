@@ -1,6 +1,6 @@
 {
   "name": "@exalent/user-management",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "index.js",
   "scripts": {
     "transpile": "babel src --out-dir dist --presets=@babel/preset-react",
@@ -24,7 +24,7 @@
     "react-redux": "^8.1.3",
     "react-router-dom": "^6.14.2"
   },
-  "files": ["src"],
+  "files": ["dist"],
   "description": "Reusable React user management components",
   "repository": {
     "type": "git",
