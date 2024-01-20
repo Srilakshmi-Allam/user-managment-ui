@@ -1,6 +1,6 @@
 {
   "name": "@exalent/user-management",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "index.js",
   "scripts": {
     "build": "react-scripts build"
@@ -21,7 +21,7 @@
     "react-redux": "^8.1.3",
     "react-router-dom": "^6.14.2"
   },
-  "files": ["dist/**/*.js", "dist/**/*.css"],
+  "files": ["src"],
   "description": "Reusable React user management components",
   "repository": {
     "type": "git",
@@ -29,6 +29,19 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
-    "@babel/preset-react": "^7.23.3"
+    "@babel/preset-react": "^7.23.3",
+    "react-scripts": "^5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
