@@ -3,8 +3,11 @@
   "version": "1.0.7",
   "main": "index.js",
   "scripts": {
-    "build": "react-scripts build"
-  },
+    "transpile": "babel src --out-dir dist --presets=@babel/preset-react",
+    "copy-css": "cp src/**/*.css dist",
+    "build": "npm run transpile && npm run copy-css && react-scripts build",
+    "pack": "npm run build && npm pack"
+  },  
   "author": "Exalent",
   "license": "MIT",
   "peerDependencies": {

@@ -13,7 +13,7 @@ steps:
 - script: |
     npm install
     npm install --save-dev @babel/core @babel/cli @babel/preset-react react-scripts
-    npx babel src --out-dir dist --presets=@babel/preset-react
+    npm run build
     npm pack
   displayName: 'Build and Pack User Management Module'
 
