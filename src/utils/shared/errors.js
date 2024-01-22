@@ -24,32 +24,6 @@ const errorMessages = {
   ERROR_LOGIN_CREDENTIALS: "Invalid Credentials",
   ERROR_SELECT_ROLE: "User Role Required",
 
-  R_EN: "Please enter Episode Rule Name",
-  EN: "Enter Episode Rule Name",
-
-  DES: "Enter a description here...",
-  R_DES: "Please write the  Description",
-
-  R_EDN: "Please Enter Episode Name",
-  EDN: "Enter Episode Name",
-  ER: "Select Episode Rule",
-  R_ER: " Please Select Episode Rule",
-  R_ES: "Please Select Episode Status",
-  R_ET: "Please Select Episode Type",
-  R_EPP: "Please Enter Episode Process Priority",
-  EPP: "Enter Episode Process Priority",
-  R_ECT: "Please Enter Episode Calculation Type",
-  R_LBPD: "Please Enter Look Back Period Days",
-  LBPD: "Enter Look Back Period Days",
-  R_ADT: "Please Select Anchor Date Type",
-  R_PADPD: "Please Enter Post Anchor Date Period Days",
-  PADPD: "Enter Post Anchor Date Period Days",
-  R_PPD: "Please Enter Pre-Procedure Days",
-  PPD: "Enter Pre-Procedure Days",
-  RD: "Enter Recovery Days",
-  R_RD: "Please Enter Pre-Procedure Days",
-  RMD: "Enter Re-admission Days",
-  R_RMD: "Please Enter Re-admission Days"
 };
 
 export default errorMessages;
