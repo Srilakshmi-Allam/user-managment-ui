@@ -24,6 +24,8 @@ export const ENDPOINTS = {
   SCREENS_MODULES: "screens",
   SCREENBYID: "screens",
   SM_PAGINATION: "screensPagination",
+  
 };
+export const DELETE_TREE_VIEW = "roleAccessScreens";
 
 export const TABLE_SIZE = 20;
