@@ -1,6 +1,4 @@
-// API URL
-export const EXALENT_BENEFITS_API = "https://episodeapi.exalenthealth.com/";
-// export const EXALENT_BENEFITS_API = "http://localhost:5000/";
+
 
 
 export const ENDPOINTS = {
