@@ -17,5 +17,9 @@ export { default as Groups } from './pages/UserGroup/List';
 export { default as UpdateGroup } from './pages/UserGroup/Edit';
 
 export { default as groupsReducer } from './slices/groups';
+export { default as modulesReducer } from './slices/modules';
+export { default as rolesReducer } from './slices/roles';
+export { default as screensReducer } from './slices/screens';
+export { default as usersReducer } from './slices/users';
 
 
