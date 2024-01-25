@@ -79,3 +79,4 @@ export const { clearSingleData, setGroupListDataState } = groupsSlice.actions;
 const { reducer } = groupsSlice;
 
 export default reducer;
+export const groupsReducer = reducer;
