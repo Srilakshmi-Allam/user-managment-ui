@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import apiClient from "../axios";
 import { ENDPOINTS } from "../../config";
-import { EXALENT_BENEFITS_API, DELETE_TREE_VIEW } from "../../config";
+import {  DELETE_TREE_VIEW } from "../../config";
 
 export const fetchAll = createAsyncThunk("screens/fetchAll", async () => {
   const { data } = await apiClient.get(`${ENDPOINTS.SCREENS_MODULES}`);
@@ -50,7 +50,7 @@ export const deleteTreeViewAll = createAsyncThunk(
     const requestData = { ids };
     try {
       const response = await fetch(
-        `${EXALENT_BENEFITS_API}${DELETE_TREE_VIEW}`,
+        `${process.env.REACT_APP_EXALENT_BENEFITS_API}${DELETE_TREE_VIEW}`,
         {
           method: "DELETE",
           headers: {
