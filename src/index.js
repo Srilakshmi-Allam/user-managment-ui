@@ -16,3 +16,6 @@ export { default as UpdateScreen } from './pages/Screens/Edit';
 export { default as Groups } from './pages/UserGroup/List';
 export { default as UpdateGroup } from './pages/UserGroup/Edit';
 
+
+export { default as rootReducer } from './slices/index';
+
