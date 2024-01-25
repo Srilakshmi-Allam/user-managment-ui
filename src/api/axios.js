@@ -1,8 +1,8 @@
 import axios from "axios";
-import { EXALENT_BENEFITS_API } from "../config";
+// import { EXALENT_BENEFITS_API } from "../config";
 
 const AXIOS_BASE_CONFIG = {
-  baseURL: EXALENT_BENEFITS_API,
+  baseURL: process.env.REACT_APP_EXALENT_BENEFITS_API,
   headers: {
     "X-Requested-With": "XMLHttpRequest",
   },
