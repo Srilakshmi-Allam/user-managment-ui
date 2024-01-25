@@ -1,9 +1,18 @@
-export function initialize(config) {
-    if (config && config.EXALENT_BENEFITS_API) {
-        process.env.REACT_APP_EXALENT_BENEFITS_API = config.EXALENT_BENEFITS_API;
-    }
+
+
+export const initialize = async (config) => {
+    // Override environment variables with config values
+    process.env = { ...process.env, ...config };
 }
 
 
-  export * from "./pages";
-  export * from "./slices";
+export async function getReducers() {
+    const slices = await import("./slices");
+    return slices;
+}
+  
+export async function getPages() {
+    const pages = await import("./pages");
+    return pages;
+}
+  
