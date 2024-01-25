@@ -85,3 +85,4 @@ export const { clearSingleData, setRoleWiseTreeView, setRoleListDataState } =
 const { reducer } = rolesSlice;
 
 export default reducer;
+export const rolesReducer = reducer;

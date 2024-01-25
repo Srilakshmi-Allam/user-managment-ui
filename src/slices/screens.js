@@ -200,3 +200,4 @@ export const { clearSingleData, setTreeView, setScreenListDataState } =
 const { reducer } = screensSlice;
 
 export default reducer;
+export const screensReducer = reducer;

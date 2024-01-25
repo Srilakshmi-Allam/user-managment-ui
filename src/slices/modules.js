@@ -80,3 +80,4 @@ export const { clearSingleData, setModuleListDataState } = modulesSlice.actions;
 const { reducer } = modulesSlice;
 
 export default reducer;
+export const modulesReducer = reducer;

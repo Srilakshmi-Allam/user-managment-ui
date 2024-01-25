@@ -113,3 +113,4 @@ export const { setUserListDataState, setUserData } = usersSlice.actions;
 const { reducer } = usersSlice;
 
 export default reducer;
+export const usersReducer = reducer;
