@@ -50,7 +50,7 @@ export const deleteTreeViewAll = createAsyncThunk(
     const requestData = { ids };
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_EXALENT_BENEFITS_API}${DELETE_TREE_VIEW}`,
+        `${process.env.USER_MANAGMENT_API}${DELETE_TREE_VIEW}`,
         {
           method: "DELETE",
           headers: {
