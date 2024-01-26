@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import apiClient from "../axios";
-import { ENDPOINTS } from "../../config";
+import { ENDPOINTS, getApiUrl } from "../../config";
 import {  DELETE_TREE_VIEW } from "../../config";
 
 export const fetchAll = createAsyncThunk("screens/fetchAll", async () => {
@@ -50,7 +50,7 @@ export const deleteTreeViewAll = createAsyncThunk(
     const requestData = { ids };
     try {
       const response = await fetch(
-        `${process.env.USER_MANAGMENT_API}${DELETE_TREE_VIEW}`,
+        `${getApiUrl()}${DELETE_TREE_VIEW}`,
         {
           method: "DELETE",
           headers: {

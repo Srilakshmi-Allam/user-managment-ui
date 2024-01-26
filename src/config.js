@@ -1,4 +1,13 @@
+// config.js
+let apiUrl = 'https://episodeapi.exalenthealth.com/';
+// let apiUrl = 'http://localhost:5000/'
 
+
+export const setApiUrl = (url) => {
+  apiUrl = url;
+};
+
+export const getApiUrl = () => apiUrl;
 
 
 export const ENDPOINTS = {
@@ -24,6 +33,7 @@ export const ENDPOINTS = {
   SM_PAGINATION: "screensPagination",
   
 };
+
 export const DELETE_TREE_VIEW = "roleAccessScreens";
 
 export const TABLE_SIZE = 20;

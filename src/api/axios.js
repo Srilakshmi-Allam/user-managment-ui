@@ -1,8 +1,8 @@
 import axios from "axios";
-// import { EXALENT_BENEFITS_API } from "../config";
+import { getApiUrl } from "../config";
 
 const AXIOS_BASE_CONFIG = {
-  baseURL: process.env.USER_MANAGMENT_API,
+  baseURL: getApiUrl(),
   headers: {
     "X-Requested-With": "XMLHttpRequest",
   },

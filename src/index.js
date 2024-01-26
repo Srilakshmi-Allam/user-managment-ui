@@ -1,5 +1,3 @@
-const dotenv = require('dotenv');
-
 // User pages
 import CreateUser from './pages/Users/Create';
 import Users from './pages/Users/List';
@@ -20,13 +18,11 @@ import rolesReducer  from './slices/roles';
 import screensReducer  from './slices/screens';
 import usersReducer  from './slices/users';
 
+import {setApiUrl} from './config'
+
 
 const initialize = async (config) => {
-    // Load environment variables from .env file
-    dotenv.config();
-
-    // Override environment variables with config values
-    process.env = { ...process.env, ...config };
+    setApiUrl(config.USER_MANAGMENT_API)
 }
 
 const getPages = () => {
