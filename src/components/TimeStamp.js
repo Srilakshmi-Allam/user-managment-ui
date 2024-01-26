@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 
-import apiClient from "../api/axios";
+import { getAxiosClient } from "../api/axios";
 import { ENDPOINTS } from "../config";
 
 const TimeStamp = ({ displayData }) => {
@@ -13,7 +13,7 @@ const TimeStamp = ({ displayData }) => {
   useEffect(() => {
     const fetchData = async (userId, mode) => {
       try {
-        const { data } = await apiClient.get(
+        const { data } = await getAxiosClient().get(
           `${ENDPOINTS.USERSBYID}/${userId}`
         );
         const fullName = `${data?.FirstName} ${data?.LastName}`;

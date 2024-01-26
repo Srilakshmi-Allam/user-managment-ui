@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import apiClient from "../axios";
+import { getAxiosClient } from "../axios";
 import { ENDPOINTS } from "../../config";
 
 export const fetchAll = createAsyncThunk(
   "roles/fetchAll",
   async ({ searchFilters, page, pageSize }) => {
     searchFilters = JSON.stringify(searchFilters)
-    const { data } = await apiClient.get(
+    const { data } = await getAxiosClient().get(
       // `${ENDPOINTS.ROLES_GROUP}/${page}/${pageSize}`
       `${ENDPOINTS.ROLES_GROUP}?searchFilters=${searchFilters}&page=${page}&pageSize=${pageSize}`
     );
@@ -17,7 +17,7 @@ export const fetchAll = createAsyncThunk(
 export const fetchRoleWiseTreeView = createAsyncThunk(
   "roles/fetchRoleWiseTreeView",
   async (roleId) => {
-    const { data } = await apiClient.get(`${ENDPOINTS.ROLE_ID}/${roleId}`);
+    const { data } = await getAxiosClient().get(`${ENDPOINTS.ROLE_ID}/${roleId}`);
     return data;
   }
 );

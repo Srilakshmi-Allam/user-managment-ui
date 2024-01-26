@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import errorMessages from "../../../utils/shared/errors";
-import apiClient from "../../../api/axios";
+import {getAxiosClient} from "../../../api/axios";
 import { ENDPOINTS } from "../../../config";
 import { breadCrumbsCreateUser } from "../../../utils/shared/breadcrumbs";
 import TextBox from "../../../components/FormInputs/TextBox";
@@ -37,7 +37,7 @@ const CreateUser = () => {
 
   useEffect(() => {
     // Fetch user groups from the backend when the component mounts
-    apiClient
+    getAxiosClient()
       .get(ENDPOINTS.USER_GROUPS)
       .then((response) => {
         setUserGroups(response.data);
@@ -51,7 +51,7 @@ const CreateUser = () => {
     // Check if a user group is selected
     if (selectedUserGroup) {
       // Make an API request to fetch roles for the selected user group
-      apiClient
+      getAxiosClient()
         .get(`${ENDPOINTS.ROLES_BY_USER_GROUP}/${selectedUserGroup}`)
         .then((response) => {
           setRoles(response.data);
@@ -78,7 +78,7 @@ const CreateUser = () => {
       CreatedBy: UserEmailData?.UserID,
     };
     // Make a POST request to create the user
-    apiClient
+    getAxiosClient()
       .post(ENDPOINTS.USER, userData)
       .then((response) => {
         // User created successfully

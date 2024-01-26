@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../../../App.css";
-import apiClient from "../../../api/axios";
+import { getAxiosClient } from "../../../api/axios";
 import { breadCrumbsUpdateUser } from "../../../utils/shared/breadcrumbs";
 import { fetchUsersById } from "../../../api/services/users.service";
 import { setUserData } from "../../../slices/users";
@@ -54,7 +54,7 @@ const UpdateUser = () => {
 
   const handleUpdateUserDetails = async (userId) => {
     try {
-      const response = await apiClient.put(`/users/${userId}`, {
+      const response = await getAxiosClient().put(`/users/${userId}`, {
         RequirePasswordChange: true,
       });
       if (response.status === 200) {
@@ -76,7 +76,7 @@ const UpdateUser = () => {
     const userEmail = userDetails.UserEmail;
 
     try {
-      await apiClient.put(`/resetPassword/${userEmail}`);
+      await getAxiosClient().put(`/resetPassword/${userEmail}`);
       await handleUpdateUserDetails(userDetails.UserID);
 
       setSuccessMessage("Password reset email sent successfully");
@@ -92,7 +92,7 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await apiClient.get(`/usersById/${userId}`);
+        const response = await getAxiosClient().get(`/usersById/${userId}`);
         setUserDetails(response.data);
         setEditedDetails(response.data);
         setSelectedUserGroup(response.data.UserGroupID);
@@ -104,7 +104,7 @@ const UpdateUser = () => {
 
     const fetchRolesAndGroups = async () => {
       try {
-        const groupsResponse = await apiClient.get("/userGroups");
+        const groupsResponse = await getAxiosClient().get("/userGroups");
         setGroups(groupsResponse.data);
       } catch (error) {
         console.error("Error fetching user groups:", error);
@@ -174,7 +174,7 @@ const UpdateUser = () => {
     const fetchRolesByUserGroup = async () => {
       try {
         if (selectedUserGroup) {
-          const rolesResponse = await apiClient.get(
+          const rolesResponse = await getAxiosClient().get(
             `/roleByUserGroup/${selectedUserGroup}`
           );
           setRoles(rolesResponse.data);
@@ -264,13 +264,13 @@ const UpdateUser = () => {
         UpdatedBy: UserEmailData?.UserID,
       };
 
-      await apiClient.put(`/users/${userId}`, detailsWithGroupAndRole);
+      await getAxiosClient().put(`/users/${userId}`, detailsWithGroupAndRole);
       setIsSaving(false);
       setSuccessMessage("User details saved successfully");
       setErrorMessage("");
       dispatch(setUserData({ ...userData, UpdatedBy: UserEmailData?.UserID }));
 
-      const response = await apiClient.get(`/usersById/${userId}`);
+      const response = await getAxiosClient().get(`/usersById/${userId}`);
       setUserDetails(response.data);
       setIsDirty(false);
       setIsSaved(true);
