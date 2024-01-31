@@ -31,4 +31,5 @@ steps:
     command: "publish"
     workingDirectory: $(System.DefaultWorkingDirectory)
     publishRegistry: useFeed
-    publishFeed: Exalent/user-management-api
+    publishFeed: user-management-api
+
