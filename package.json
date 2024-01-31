@@ -28,10 +28,6 @@
     "dist"
   ],
   "description": "Reusable React user management components",
-  "repository": {
-    "type": "git",
-    "url": "https://exalent@dev.azure.com/exalent/EpisodeDetector/_git/user-management-ui"
-  },
   "devDependencies": {
     "@babel/cli": "^7.23.4",
     "@babel/core": "^7.23.7",

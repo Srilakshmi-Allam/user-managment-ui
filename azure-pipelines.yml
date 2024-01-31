@@ -10,6 +10,10 @@ steps:
     versionSpec: '14.x'
   displayName: 'Install Node.js'
 
+- task: NpmAuthenticate@0
+  inputs:
+    workingFile: .npmrc
+
 - script: |
     npm install
     npm run build
@@ -20,10 +24,6 @@ steps:
   inputs:
     targetPath: '$(System.DefaultWorkingDirectory)'
     artifact: 'user-management-package'
-
-- task: NpmAuthenticate@0
-  inputs:
-    workingFile: .npmrc
 
 - task: Npm@1
   displayName: 'Publish Npm Package'
