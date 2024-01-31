@@ -31,4 +31,4 @@ steps:
     command: "publish"
     workingDirectory: $(System.DefaultWorkingDirectory)
     publishRegistry: useFeed
-    publishFeed: EpisodeDetector/exalent-user-management
+    publishFeed: Exalent/user-management-api
