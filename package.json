@@ -1,6 +1,6 @@
 {
   "name": "@exalent/user-management",
-  "version": "2.0.3",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "transpile": "babel src --out-dir dist --presets=@babel/preset-react",
